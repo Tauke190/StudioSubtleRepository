@@ -216,39 +216,36 @@
                 </div>
                 <div class="col-lg-6 form">
                     <form id="contact-form" method="post" action="contact.php">
-
                         <div class="messages"></div>
-
                         <div class="controls">
-
+                
                             <div class="form-group">
                                 <input id="form_name" type="text" name="name" placeholder="Name" required="required">
                             </div>
-
+                
                             <div class="form-group">
-                                <input id="form_email" type="email" name="email" placeholder="Email"
-                                    required="required">
+                                <input id="form_email" type="email" name="email" placeholder="Email" required="required">
                             </div>
+                
                             <div class="form-group">
-                                <input id="form_type of enquiry" type="enquiry" name="Type of Enquiry" placeholder="Type of Enquiry"
-                                    required="required">
-                                    <select id="form_type_of_enquiry" name="Type of Enquiry" required="required" class="form-control">
-                                        <option value="" disabled selected>Select Type of Enquiry</option>
-                                        <option value="general">Project Enquiry</option>
-                                        <option value="support">Internship/job Application</option>
-                                        
-                                        <option value="other">Other</option>
-                                    </select>
+                                <label for="form_type_of_enquiry" class="sr-only">Type of Enquiry</label>
+                                <select id="form_type_of_enquiry" name="type_of_enquiry" required="required" class="form-control">
+                                    <option value="" disabled selected>Select Type of Enquiry</option>
+                                    <option value="general">Project Enquiry</option>
+                                    <option value="support">Internship/Job Application</option>
+                                    <option value="other">Other</option>
+                                </select>
                             </div>
-
+                
                             <div class="form-group">
-                                <textarea id="form_message" name="message" placeholder="Message" rows="4"
-                                    required="required"></textarea>
+                                <textarea id="form_message" name="message" placeholder="Message" rows="4" required="required"></textarea>
                             </div>
-
+                
                             <button type="submit" class="btn-curve btn-color"><span>Submit</span></button>
                         </div>
                     </form>
+                </div>
+                
                 </div>
             </div>
         </div>

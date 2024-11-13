@@ -1,17 +1,16 @@
 <?php
-// Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    // Get form data and sanitize
+    // Sanitize and capture form data
     $name = strip_tags(trim($_POST["name"]));
     $email = filter_var(trim($_POST["email"]), FILTER_SANITIZE_EMAIL);
-    $type_of_enquiry = strip_tags(trim($_POST["Type_of_Enquiry"]));
+    $type_of_enquiry = strip_tags(trim($_POST["type_of_enquiry"]));
     $message = strip_tags(trim($_POST["message"]));
 
     // Set recipient email
     $recipient = "subtle.nepal@gmail.com"; // Replace with your email address
 
-    // Set email subject
+    // Email subject
     $subject = "New Contact Form Submission: $type_of_enquiry";
 
     // Build the email content
@@ -20,15 +19,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email_content .= "Type of Enquiry: $type_of_enquiry\n\n";
     $email_content .= "Message:\n$message\n";
 
-    // Set email headers
+    // Email headers
     $email_headers = "From: $name <$email>";
 
-    // Send the email
+    // Send email and provide feedback
     if (mail($recipient, $subject, $email_content, $email_headers)) {
-        // Redirect to thank you page or display success message
         echo "Thank you! Your message has been sent.";
     } else {
-        // Display error message
         echo "Oops! Something went wrong, and we couldn't send your message.";
     }
 }

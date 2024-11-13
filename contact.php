@@ -1,48 +1,35 @@
 <?php
+// Check if form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-// configure
-$from = 'Demo contact form <demo@domain.com>';
-$sendTo = 'Demo contact form <subtle.nepal@gmail.com>'; // Add Your Email
-$subject = 'New message from contact form';
-$fields = array('name' => 'Name', 'subject' => 'Subject', 'email' => 'Email', 'message' => 'Message'); // array variable name => Text to appear in the email
-$okMessage = 'Contact form successfully submitted. Thank you, I will get back to you soon!';
-$errorMessage = 'There was an error while submitting the form. Please try again later';
+    // Get form data and sanitize
+    $name = strip_tags(trim($_POST["name"]));
+    $email = filter_var(trim($_POST["email"]), FILTER_SANITIZE_EMAIL);
+    $type_of_enquiry = strip_tags(trim($_POST["Type_of_Enquiry"]));
+    $message = strip_tags(trim($_POST["message"]));
 
-// let's do the sending
+    // Set recipient email
+    $recipient = "your-email@example.com"; // Replace with your email address
 
-try
-{
-    $emailText = "You have new message from contact form\n=============================\n";
+    // Set email subject
+    $subject = "New Contact Form Submission: $type_of_enquiry";
 
-    foreach ($_POST as $key => $value) {
+    // Build the email content
+    $email_content = "Name: $name\n";
+    $email_content .= "Email: $email\n";
+    $email_content .= "Type of Enquiry: $type_of_enquiry\n\n";
+    $email_content .= "Message:\n$message\n";
 
-        if (isset($fields[$key])) {
-            $emailText .= "$fields[$key]: $value\n";
-        }
+    // Set email headers
+    $email_headers = "From: $name <$email>";
+
+    // Send the email
+    if (mail($recipient, $subject, $email_content, $email_headers)) {
+        // Redirect to thank you page or display success message
+        echo "Thank you! Your message has been sent.";
+    } else {
+        // Display error message
+        echo "Oops! Something went wrong, and we couldn't send your message.";
     }
-
-    $headers = array('Content-Type: text/plain; charset="UTF-8";',
-        'From: ' . $from,
-        'Reply-To: ' . $from,
-        'Return-Path: ' . $from,
-    );
-    
-    mail($sendTo, $subject, $emailText, implode("\n", $headers));
-
-    $responseArray = array('type' => 'success', 'message' => $okMessage);
 }
-catch (\Exception $e)
-{
-    $responseArray = array('type' => 'danger', 'message' => $errorMessage);
-}
-
-if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
-    $encoded = json_encode($responseArray);
-
-    header('Content-Type: application/json');
-
-    echo $encoded;
-}
-else {
-    echo $responseArray['message'];
-}
+?>
